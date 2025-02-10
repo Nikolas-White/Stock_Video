@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>AI Stock Footage</h1>
+  <form method="get" action="{{ url_for('index') }}">
+    <input type="text" name="q" placeholder="Search videos..." value="{{ search_query }}">
+    <input type="submit" value="Search">
+  </form>
+  <p><a href="{{ url_for('upload') }}">Upload a new video</a></p>
+  {% if videos %}
+    <ul>
+      {% for video in videos %}
+        <li>
+          <strong>{{ video.title }}</strong> (Uploaded on {{ video.upload_date.strftime('%Y-%m-%d %H:%M') }})<br>
+          Tags: {{ video.tags }}<br>
+          <a href="{{ url_for('download', video_id=video.id) }}">Download</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No videos found.</p>
+  {% endif %}
+{% endblock %}
